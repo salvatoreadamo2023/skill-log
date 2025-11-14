@@ -25,8 +25,29 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
+                // Swagger e OpenAPI sempre pubblici
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+                // Utenti
+                .requestMatchers("/api/utenti/**").hasRole("ADMIN")
+                .requestMatchers("/api/utenti/username/**").hasAnyRole("ADMIN", "USER")
+
+                // Skills
+                .requestMatchers("/api/skills/search", "/api/skills/test").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/skills/export").hasRole("ADMIN")
                 .requestMatchers("/api/skills/**").hasRole("ADMIN")
+
+                // Progetti
+                .requestMatchers("/api/progetti/stato/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/progetti/**").hasRole("ADMIN")
+
+                // AI
+                .requestMatchers("/api/ai/message").hasAnyRole("ADMIN", "USER")
+
+                // Stats
+                .requestMatchers("/api/stats").hasRole("ADMIN")
+
+                // Tutto il resto richiede autenticazione
                 .anyRequest().authenticated()
             )
             .userDetailsService(userDetailsService)

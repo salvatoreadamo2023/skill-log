@@ -11,3 +11,15 @@ spring:
         provider:
           google:
             issuer-uri: https://accounts.google.com
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GOOGLE_MAIL}
+    password: ${GOOGLE_PWD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

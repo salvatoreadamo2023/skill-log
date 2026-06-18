@@ -112,9 +112,9 @@ Le eccezioni sono gestite con `@RestControllerAdvice`. Le risposte errore hanno 
 Copia `.env.example` e imposta i valori reali nel tuo ambiente:
 
 ```text
-DB_URL=jdbc:mysql://localhost:3306/skilllog?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-DB_USERNAME=skilllog_user
-DB_PASSWORD=Password123!
+SKILLLOG_DB_URL=jdbc:mysql://localhost:3306/skilllog?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+SKILLLOG_DB_USERNAME=skilllog_user
+SKILLLOG_DB_PASSWORD=Password123!
 JWT_SECRET=bXktc3VwZXItc2VjcmV0LWtleS1mb3Itand0LTI1Ni1iaXRzLTEyMzQ1Ng==
 JWT_EXPIRATION_MS=86400000
 OPENAI_API_KEY=
@@ -213,6 +213,22 @@ Risposta:
 GET /api/auth/me
 Authorization: Bearer <token>
 ```
+
+## Swagger
+
+Swagger UI e' disponibile a:
+
+```text
+http://localhost:8080/swagger-ui/index.html
+```
+
+Per testare endpoint protetti da Swagger:
+
+1. esegui `/api/auth/login`;
+2. copia il valore `token`;
+3. clicca `Authorize`;
+4. incolla il token JWT;
+5. esegui gli endpoint protetti.
 
 ### Lista Utenti
 

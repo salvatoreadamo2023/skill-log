@@ -35,5 +35,6 @@ public class Skill {
     // relazione gestita dal lato Utente
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
     private Set<Utente> utenti = new HashSet<>();
 }

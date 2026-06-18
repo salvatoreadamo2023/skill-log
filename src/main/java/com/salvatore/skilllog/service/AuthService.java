@@ -3,6 +3,7 @@ package com.salvatore.skilllog.service;
 import com.salvatore.skilllog.dto.AuthResponse;
 import com.salvatore.skilllog.dto.LoginRequest;
 import com.salvatore.skilllog.dto.RegisterRequest;
+import com.salvatore.skilllog.exception.UsernameAlreadyExistsException;
 import com.salvatore.skilllog.model.Utente;
 import com.salvatore.skilllog.repository.UtenteRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,7 +37,7 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         if (utenteRepository.findByUsername(request.getUsername()) != null) {
-            throw new IllegalArgumentException("Username gia' registrato");
+            throw new UsernameAlreadyExistsException(request.getUsername());
         }
 
         Utente utente = Utente.builder()

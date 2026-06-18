@@ -2,6 +2,7 @@ package com.salvatore.skilllog.service;
 
 import com.salvatore.skilllog.dto.UtenteRequest;
 import com.salvatore.skilllog.dto.UtenteResponse;
+import com.salvatore.skilllog.exception.ResourceNotFoundException;
 import com.salvatore.skilllog.mapper.UtenteMapper;
 import com.salvatore.skilllog.model.Utente;
 import com.salvatore.skilllog.repository.UtenteRepository;
@@ -31,7 +32,7 @@ public class UtenteService {
     public UtenteResponse getUtenteById(Long id) {
         return repository.findById(id)
                 .map(UtenteMapper::toResponse)
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException("Utente", id));
     }
 
     public UtenteResponse createUtente(UtenteRequest request) {
@@ -40,10 +41,8 @@ public class UtenteService {
     }
 
     public UtenteResponse updateUtente(Long id, UtenteRequest request) {
-        Utente utente = repository.findById(id).orElse(null);
-        if (utente == null) {
-            return null;
-        }
+        Utente utente = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Utente", id));
 
         utente.setUsername(request.getUsername());
         utente.setRuolo(request.getRuolo());
@@ -61,7 +60,10 @@ public class UtenteService {
 
     public UtenteResponse getUtenteByUsername(String username) {
         Utente utente = repository.findByUsername(username);
-        return utente == null ? null : UtenteMapper.toResponse(utente);
+        if (utente == null) {
+            throw new ResourceNotFoundException("Utente non trovato con username: " + username);
+        }
+        return UtenteMapper.toResponse(utente);
     }
 
     private Utente saveUtente(Utente utente) {

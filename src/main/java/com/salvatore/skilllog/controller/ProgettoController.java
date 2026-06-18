@@ -33,8 +33,7 @@ public class ProgettoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProgettoResponse> getProgettoById(@PathVariable Long id) {
-        ProgettoResponse progetto = service.getProgettoById(id);
-        return progetto == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(progetto);
+        return ResponseEntity.ok(service.getProgettoById(id));
     }
 
     @PostMapping
@@ -47,8 +46,7 @@ public class ProgettoController {
             @PathVariable Long id,
             @Valid @RequestBody ProgettoRequest request
     ) {
-        ProgettoResponse progetto = service.updateProgetto(id, request);
-        return progetto == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(progetto);
+        return ResponseEntity.ok(service.updateProgetto(id, request));
     }
 
     @DeleteMapping("/{id}")

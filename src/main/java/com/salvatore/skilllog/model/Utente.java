@@ -39,6 +39,7 @@ public class Utente {
     )
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
     private Set<Skill> skills = new HashSet<>();
 
     // Relazione molti-a-molti con Progetto
@@ -50,5 +51,6 @@ public class Utente {
     )
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
     private Set<Progetto> progetti = new HashSet<>();
 }

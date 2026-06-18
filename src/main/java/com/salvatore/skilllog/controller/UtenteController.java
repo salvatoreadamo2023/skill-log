@@ -33,8 +33,7 @@ public class UtenteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UtenteResponse> getUtenteById(@PathVariable Long id) {
-        UtenteResponse utente = service.getUtenteById(id);
-        return utente == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(utente);
+        return ResponseEntity.ok(service.getUtenteById(id));
     }
 
     @PostMapping
@@ -47,8 +46,7 @@ public class UtenteController {
             @PathVariable Long id,
             @Valid @RequestBody UtenteRequest request
     ) {
-        UtenteResponse utente = service.updateUtente(id, request);
-        return utente == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(utente);
+        return ResponseEntity.ok(service.updateUtente(id, request));
     }
 
     @DeleteMapping("/{id}")
@@ -59,7 +57,6 @@ public class UtenteController {
 
     @GetMapping("/username/{username}")
     public ResponseEntity<UtenteResponse> getUtenteByUsername(@PathVariable String username) {
-        UtenteResponse utente = service.getUtenteByUsername(username);
-        return utente == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(utente);
+        return ResponseEntity.ok(service.getUtenteByUsername(username));
     }
 }

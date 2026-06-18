@@ -38,5 +38,6 @@ public class Progetto {
     // relazione molti-a-molti gestita dal lato Utente
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
     private Set<Utente> utenti = new HashSet<>();
 }

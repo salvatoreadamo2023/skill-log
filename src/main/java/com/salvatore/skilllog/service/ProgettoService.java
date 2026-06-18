@@ -2,6 +2,7 @@ package com.salvatore.skilllog.service;
 
 import com.salvatore.skilllog.dto.ProgettoRequest;
 import com.salvatore.skilllog.dto.ProgettoResponse;
+import com.salvatore.skilllog.exception.ResourceNotFoundException;
 import com.salvatore.skilllog.mapper.ProgettoMapper;
 import com.salvatore.skilllog.model.Progetto;
 import com.salvatore.skilllog.repository.ProgettoRepository;
@@ -28,7 +29,7 @@ public class ProgettoService {
     public ProgettoResponse getProgettoById(Long id) {
         return repository.findById(id)
                 .map(ProgettoMapper::toResponse)
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException("Progetto", id));
     }
 
     public ProgettoResponse createProgetto(ProgettoRequest request) {
@@ -37,10 +38,8 @@ public class ProgettoService {
     }
 
     public ProgettoResponse updateProgetto(Long id, ProgettoRequest request) {
-        Progetto progetto = repository.findById(id).orElse(null);
-        if (progetto == null) {
-            return null;
-        }
+        Progetto progetto = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Progetto", id));
 
         progetto.setNome(request.getNome());
         progetto.setDescrizione(request.getDescrizione());
